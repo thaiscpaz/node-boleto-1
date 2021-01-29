@@ -14,27 +14,7 @@ exports.dvBarra = function (barra) {
 }
 
 exports.barcodeData = function (boleto) {
-  var codigoBanco = this.options.codigo
-  var numMoeda = '9'
-  var fixo = '9' // Numero fixo para a posição 05-05
-  var ios = '0' // IOS - somente para Seguradoras (Se 7% informar 7, limitado 9%) - demais clientes usar 0
-
-  var fatorVencimento = formatters.fatorVencimento(moment(boleto['data_vencimento']).utc().format())
-
-  var valor = formatters.addTrailingZeros(boleto['valor'], 10)
-  var carteira = boleto['carteira']
-  var codigoCedente = formatters.addTrailingZeros(boleto['codigo_cedente'], 7)
-
-  var nossoNumero = formatters.addTrailingZeros(boleto['nosso_numero'], 12) + formatters.mod11(boleto['nosso_numero'])
-
-  var barra = codigoBanco + numMoeda + fatorVencimento + valor + fixo + codigoCedente + nossoNumero + ios + carteira
-
-  var dvBarra = this.dvBarra(barra)
-  var lineData = barra.substring(0, 4) + dvBarra + barra.substring(4, barra.length)
-
-  console.log(`lineData`, lineData)
-
-  return lineData
+  return boleto['codigo_de_barras']
 }
 
 exports.linhaDigitavel = function (barcodeData) {
