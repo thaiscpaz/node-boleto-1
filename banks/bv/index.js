@@ -4,7 +4,7 @@ var ediHelper = require('../../lib/edi-helper')
 var helper = require('./helper')
 
 exports.options = {
-  logoURL: 'https://assets.pagar.me/boleto/images/santander.png',
+  logoURL: '../../public/images/bv.jpg',
   codigo: '655'
 }
 
