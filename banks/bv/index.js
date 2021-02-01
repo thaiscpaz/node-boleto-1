@@ -1,10 +1,7 @@
-const moment = require('moment')
 var formatters = require('../../lib/formatters')
-var ediHelper = require('../../lib/edi-helper')
-var helper = require('./helper')
 
 exports.options = {
-  logoURL: '../../public/images/bv.jpg',
+  logoURL: 'https://raw.githubusercontent.com/natura-pay/node-boleto/NFS-2520/public/images/bv.jpg',
   codigo: '655'
 }
 

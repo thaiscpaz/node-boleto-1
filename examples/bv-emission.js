@@ -28,7 +28,7 @@ console.log(boleto['linha_digitavel']);
 app.use(express.static(path.join(__dirname, '/../')))
 
 app.get('/', function (req, res) {
-  boleto.renderHTML()
+  boleto.renderPDF()
   .then(result => { res.send(result) })
   .catch(err => console.log(err))
 })
