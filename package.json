@@ -12,7 +12,8 @@
     "url": "https://github.com/pagarme/node-boleto"
   },
   "dependencies": {
-    "ejs": "2.5.5"
+    "ejs": "2.5.5",
+    "html-pdf-node": "^1.0.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",
