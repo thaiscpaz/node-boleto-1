@@ -5,6 +5,7 @@ const expect = require('chai').expect
 describe('Boleto render', () => {
   describe('boleto from 2018-11-09', () => {
     let boletoHTML20181109, boletoHTML20181031
+    
     before(() => {
       return new Promise((resolve, reject) => {
         boletoMock20181109.renderHTML(function (html) {

@@ -23,14 +23,14 @@ boleto = new Boleto({
   'codigo_de_barras': '65592851700000104900000001571500157164467800'
 })
 
-// console.log(boleto['linha_digitavel']);
+console.log(boleto['linha_digitavel']);
 
 app.use(express.static(path.join(__dirname, '/../')))
 
 app.get('/', function (req, res) {
-  boleto.renderHTML(function (html) {
-    return res.send(html)
-  })
+  boleto.renderHTML()
+  .then(result => { res.send(result) })
+  .catch(err => console.log(err))
 })
 
 app.listen(3003)
