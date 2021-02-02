@@ -1,6 +1,6 @@
 {
   "name": "@natura-pay/node-boleto",
-  "version": "2.2.0",
+  "version": "1.0.0",
   "description": "Boleto generator in Node.js",
   "main": "index.js",
   "scripts": {
@@ -12,11 +12,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pagarme/node-boleto"
+    "url": "https://github.com/natura-pay/node-boleto"
   },
   "dependencies": {
     "ejs": "2.5.5",
-    "express": "^4.17.1",
     "html-pdf-node": "^1.0.7"
   },
   "devDependencies": {
@@ -33,10 +32,13 @@
     "moment": "https://github.com/pagarme/moment/archive/0.0.5.tar.gz",
     "ramda": "^0.23.0"
   },
-  "author": "Pedro Franceschi",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Veller Bauer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pagarme/node-boleto/issues"
+    "url": "https://github.com/natura-pay/node-boleto/issues"
   },
-  "homepage": "https://github.com/pagarme/node-boleto"
+  "homepage": "https://github.com/natura-pay/node-boleto"
 }
