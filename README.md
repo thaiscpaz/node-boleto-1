@@ -3,27 +3,32 @@ node-boleto
 
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Geração de boleto bancário em Node.js. Os algoritmos de geração da linha digitável e do código de barras foram inspirados no [boletophp](https://github.com/BielSystems/boletophp).
+Geração de boleto bancário em Node.js. Os algoritmos de geração da linha digitável e do código de barras são um fork de [node-boleto](https://github.com/pagarme/node-boleto).
+Esta versão da biblioteca adiciona as seguintes funcionalidades à biblioteca original mencionada acima:
+- Conversão de boletos do formato HTML para PDF
+- Impressão de boletos do banco BV
 
 ## Bancos suportados
 
 - Santander - by [pedrofranceschi](https://github.com/pedrofranceschi) - homologado
 - Bradesco - by [pedrofranceschi](https://github.com/pedrofranceschi)
+- BV - by [veller](https://github.com/veller) - apenas impressão de boleto que já possua código de barras
 
 ## Instalação
 
 ```
-npm install node-boleto
+npm i @natura-pay/node-boleto
 ```
 
-## Exemplo de uso
+## Exemplos de uso
 
-Emitindo um boleto:
+### Emitindo um boleto Santander ou Bradesco e imprimindo em PDF:
 
 ```javascript
-var Boleto = require('node-boleto').Boleto;
+const Boleto = require('node-boleto').Boleto;
+const fs = require('fs');
 
-var boleto = new Boleto({
+const boleto = new Boleto({
   'banco': "santander", // nome do banco dentro da pasta 'banks'
   'data_emissao': new Date(),
   'data_vencimento': new Date(new Date().getTime() + 5 * 24 * 3600 * 1000), // 5 dias futuramente
@@ -39,12 +44,41 @@ var boleto = new Boleto({
 
 console.log("Linha digitável: " + boleto['linha_digitavel'])
 
-boleto.renderHTML(function(html){
-  console.log(html);
-});
+const pdfBuffer = await boleto.renderPDF();
+
+fs.writeFileSync(`boleto-pdf-${Date.now()}.pdf`, pdfBuffer); // exemplo para salvar o pdf do boleto em arquivo
+
 ```
 
-Parseando o arquivo-retorno EDI do banco:
+### Emitindo um boleto Santander ou Bradesco e imprimindo em HTML:
+
+```javascript
+const Boleto = require('node-boleto').Boleto;
+const fs = require('fs');
+
+const boleto = new Boleto({
+  'banco': "santander", // nome do banco dentro da pasta 'banks'
+  'data_emissao': new Date(),
+  'data_vencimento': new Date(new Date().getTime() + 5 * 24 * 3600 * 1000), // 5 dias futuramente
+  'valor': 1500, // R$ 15,00 (valor em centavos)
+  'nosso_numero': "1234567",
+  'numero_documento': "123123",
+  'cedente': "Pagar.me Pagamentos S/A",
+  'cedente_cnpj': "18727053000174", // sem pontos e traços
+  'agencia': "3978",
+  'codigo_cedente': "6404154", // PSK (código da carteira)
+  'carteira': "102"
+});
+
+console.log("Linha digitável: " + boleto['linha_digitavel'])
+
+const html = await boleto.renderHTML();
+
+fs.writeFileSync(`boleto-pdf-${Date.now()}.html`, html); // exemplo para salvar o html do boleto em arquivo
+
+```
+
+### Parseando o arquivo-retorno EDI do banco:
 
 ```javascript
 var ediParser = require('node-boleto').EdiParser,
@@ -56,6 +90,42 @@ var parsedFile = ediParser.parse("santander", ediFileContent);
 
 console.log("Boletos pagos: ");
 console.log(parsedFile.boletos);
+```
+
+### Imprimindo um boleto BV:
+
+Boletos BV não possuem suporte, por ora, para geração de código de barras e linha digitável.
+Desta forma, para este banco a lib funciona apenas com o intuito de impressão de boleto a partir de um objeto como o exemplo abaixo.
+Atenção para a obrigatoriedade do envio válido da opção `codigo_de_barras`.
+
+```javascript
+const Boleto = require('node-boleto').Boleto;
+const fs = require('fs');
+
+const boleto = new Boleto({
+  'banco': 'bv',
+  'data_emissao': new Date('2021-01-21T00:00:00Z'),
+  'data_vencimento': new Date('2021-01-31'),
+  'valor': 1500,
+  'nosso_numero': '1571644678',
+  'numero_documento': '0022300000010600000644678',
+  'cedente': 'ARROWHEAD SOFTWARE LTDA',
+  'cedente_cnpj': '56444538000140',
+  'agencia': '1111',
+  'codigo_cedente': '35524559000103',
+  'carteira': '',
+  'pagador': 'Nome do pagador\nCPF: 000.000.000-00',
+  'local_de_pagamento': 'PAGÁVEL EM QUALQUER BANCO ATÉ O VENCIMENTO.',
+  'instrucoes': 'Não receber após o vencimento',
+  'codigo_de_barras': '34191851900260000001790001043510049102015000'
+});
+
+console.log("Linha digitável: " + boleto['linha_digitavel'])
+
+const pdfBuffer = await boleto.renderPDF();
+
+fs.writeFileSync(`boleto-pdf-${Date.now()}.pdf`, pdfBuffer); // exemplo para salvar o pdf do boleto em arquivo
+
 ```
 
 ## Adicionando novos bancos
