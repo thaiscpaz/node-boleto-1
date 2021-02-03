@@ -20,9 +20,9 @@ Esta versão da biblioteca adiciona as seguintes funcionalidades à biblioteca o
 npm i @natura-pay/node-boleto
 ```
 
-## Exemplo de uso
+## Exemplos de uso
 
-### Emitindo e imprimindo um boleto Santander ou Bradesco:
+### Emitindo um boleto Santander ou Bradesco e imprimindo em PDF:
 
 ```javascript
 const Boleto = require('node-boleto').Boleto;
@@ -50,6 +50,34 @@ fs.writeFileSync(`boleto-pdf-${Date.now()}.pdf`, pdfBuffer); // exemplo para sal
 
 ```
 
+### Emitindo um boleto Santander ou Bradesco e imprimindo em HTML:
+
+```javascript
+const Boleto = require('node-boleto').Boleto;
+const fs = require('fs');
+
+const boleto = new Boleto({
+  'banco': "santander", // nome do banco dentro da pasta 'banks'
+  'data_emissao': new Date(),
+  'data_vencimento': new Date(new Date().getTime() + 5 * 24 * 3600 * 1000), // 5 dias futuramente
+  'valor': 1500, // R$ 15,00 (valor em centavos)
+  'nosso_numero': "1234567",
+  'numero_documento': "123123",
+  'cedente': "Pagar.me Pagamentos S/A",
+  'cedente_cnpj': "18727053000174", // sem pontos e traços
+  'agencia': "3978",
+  'codigo_cedente': "6404154", // PSK (código da carteira)
+  'carteira': "102"
+});
+
+console.log("Linha digitável: " + boleto['linha_digitavel'])
+
+const html = await boleto.renderHTML();
+
+fs.writeFileSync(`boleto-pdf-${Date.now()}.html`, html); // exemplo para salvar o html do boleto em arquivo
+
+```
+
 ### Parseando o arquivo-retorno EDI do banco:
 
 ```javascript
@@ -65,6 +93,7 @@ console.log(parsedFile.boletos);
 ```
 
 ### Imprimindo um boleto BV:
+
 Boletos BV não possuem suporte, por ora, para geração de código de barras e linha digitável.
 Desta forma, para este banco a lib funciona apenas com o intuito de impressão de boleto a partir de um objeto como o exemplo abaixo.
 Atenção para a obrigatoriedade do envio válido da opção `codigo_de_barras`.
