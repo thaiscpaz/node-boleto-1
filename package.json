@@ -15,8 +15,7 @@
     "url": "https://github.com/natura-pay/node-boleto"
   },
   "dependencies": {
-    "ejs": "2.5.5",
-    "html-pdf-node": "^1.0.7"
+    "ejs": "2.5.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
