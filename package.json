@@ -17,6 +17,7 @@
   "dependencies": {
     "chrome-aws-lambda": "^7.0.0",
     "ejs": "2.5.5",
+    "express": "^4.17.1",
     "puppeteer-core": "^8.0.0"
   },
   "devDependencies": {

@@ -1,7 +1,8 @@
 var formatters = require('../../lib/formatters')
 
 exports.options = {
-  logoURL: 'https://raw.githubusercontent.com/natura-pay/node-boleto/NFS-2520/public/images/bv.jpg',
+  // logoURL: 'https://raw.githubusercontent.com/natura-pay/node-boleto/NFS-2520/public/images/bv.jpg',
+  logoURL: 'https://assets.pagar.me/boleto/images/bradesco.jpg',
   codigo: '655'
 }
 
