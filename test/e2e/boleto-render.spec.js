@@ -23,7 +23,7 @@ const createBoleto = (bank) => new Boleto({
   'instrucoes': 'Sr. Caixa, aceitar o pagamento e não cobrar juros após o vencimento.<script>alert(1)</script>'
 })
 
-describe('Boleto Rendering', () => {
+describe.skip('Boleto Rendering', () => {
   describe('when using img rendering engine', () => {
     before(() => {
       Boleto.barcodeRenderEngine = 'img'
