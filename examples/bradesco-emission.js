@@ -27,9 +27,9 @@ var boleto = new Boleto({
 app.use(express.static(path.join(__dirname, '/../')))
 
 app.get('/', function (req, res) {
-  boleto.renderHTML(function (html) {
-    return res.send(html)
-  })
+  boleto.renderHTML()
+  .then(result => { res.send(result) })
+  .catch(err => console.log(err))
 })
 
 app.listen(3003)
