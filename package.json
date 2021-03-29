@@ -1,6 +1,6 @@
 {
   "name": "@natura-pay/node-boleto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Boleto generator in Node.js",
   "main": "index.js",
   "scripts": {
