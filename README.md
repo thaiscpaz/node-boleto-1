@@ -8,6 +8,10 @@ Esta versão da biblioteca adiciona as seguintes funcionalidades à biblioteca o
 - Conversão de boletos do formato HTML para PDF
 - Impressão de boletos do banco BV
 
+Para a conversão de boletos para PDF é necessária a instalação da ferramenta de linha de comando `wkhtmltopdf`. Você pode fazer o download da versão corresponde ao seu sistema operacional [neste link](https://wkhtmltopdf.org/downloads.html). Certifique-se de que a `wkhtmltopdf` está no seu PATH.
+
+Se você utiliza AWS Lambda, há uma seção abaixo que explica como instalar a `wkhtmltopdf` na lambda.
+
 ## Bancos suportados
 
 - Santander - by [pedrofranceschi](https://github.com/pedrofranceschi) - homologado
@@ -19,6 +23,45 @@ Esta versão da biblioteca adiciona as seguintes funcionalidades à biblioteca o
 ```
 npm i @natura-pay/node-boleto
 ```
+## Instalando a dependência wkhtmltopdf em uma AWS Lambda
+
+1. Baixe o [lambda zip](https://wkhtmltopdf.org/downloads.html) no site de downloads da wkhtmltopdf.
+2. Extraia o conteúdo do zip e adicione na raiz do código da sua lambda, ficará assim:
+```
+.
+│
+└───bin
+│   │   wkhtmltopdf
+│
+└───lib
+│   │   libbz2.so.1
+│   │   libexpat.so.1
+│   │   libfontconfig.so.1
+│   │   libfreetype.so.6
+│   │   libjpeg.so.62
+│   │   libpng15.so.15
+│   │   libuuid.so.1
+│   │   libX11.so.6
+│   │   libXau.so.6
+│   │   libxcb.so.1
+│   │   libXext.so.6
+│   │   libXrender.so.1
+│
+└───fonts
+│   │   fonts.conf
+│   │   .uuid
+│   └───dejavu
+```
+3. Dê permissão de execução ao binário com o comeando `chmod 755 bin/wkhtmltopdf`
+4. Atualize a sua variável PATH para:
+```
+process.env['PATH'] = process.env['PATH'] + ':' + process.env['LAMBDA_TASK_ROOT'] + '/bin';
+```
+5. Atualize a sua variável FONTCONFIG_PATH para:
+```
+process.env['FONTCONFIG_PATH'] = process.env['LAMBDA_TASK_ROOT'] + '/fonts';
+```
+6. Faça deploy do código
 
 ## Exemplos de uso
 

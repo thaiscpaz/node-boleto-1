@@ -13,5 +13,10 @@ describe('Boleto render', () => {
       const result = await boletoMock20181031.renderHTML()
       expect(result.includes('31/10/2018')).to.be.equal(true)
     })
+
+    it('should convert boleto to PDF buffer', async () => {
+      const result = await boletoMock20181031.renderPDF()
+      expect(result).to.be.instanceOf(Buffer)
+    })
   })
 })
