@@ -7,7 +7,8 @@ module.exports = {
       codigo: '123'
     },
     barcodeData: R.always('123'),
-    linhaDigitavel: R.always('123')
+    linhaDigitavel: R.always('123'),
+    ourNumberDigit: R.always(0)
   }
 }
 
