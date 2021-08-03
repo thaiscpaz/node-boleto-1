@@ -64,3 +64,11 @@ exports.linhaDigitavel = function (barcodeData) {
 
   return campos.join(' ')
 }
+
+exports.ourNumberDigit = function (boleto) {
+  if(boleto['nosso_numero_dv']){
+    return boleto['nosso_numero_dv'];
+  }else {
+    return formatters.mod11(boleto['nosso_numero'].toString());
+  }
+}

@@ -60,3 +60,11 @@ exports.linhaDigitavel = function (barcodeData) {
   res = res.substring(0, 39) + ' ' + res.substring(39, res.length);
   return res;
 }
+
+exports.ourNumberDigit = function (boleto) {
+  if(boleto['nosso_numero_dv']){
+    return boleto['nosso_numero_dv'];
+  }else {
+    return formatters.mod11(boleto['nosso_numero'].toString());
+  }
+}

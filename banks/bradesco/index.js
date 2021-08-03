@@ -151,3 +151,7 @@ exports.parseEDIFile = function (fileContent) {
     return null
   }
 }
+
+exports.ourNumberDigit = function (boleto) {
+  return formatters.mod11(boleto['nosso_numero'].toString());
+}
