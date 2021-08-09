@@ -1,7 +1,7 @@
 var formatters = require('../../lib/formatters')
 
 exports.options = {
-  logoURL: 'https://raw.githubusercontent.com/natura-pay/node-boleto/NFS-2520/public/images/itau.png',
+  logoURL: 'https://raw.githubusercontent.com/natura-pay/node-boleto/NFS-2520/public/images/itau.jpg',
   codigo: '341',
   moeda: '9'
 }
