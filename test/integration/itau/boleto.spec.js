@@ -26,7 +26,7 @@ describe('Itau Boleto', () => {
     })
 
     it('contains correct bank options', () => {
-      expect(boleto.bank.options).to.have.property('logoURL').that.contains('itau.png')
+      expect(boleto.bank.options).to.have.property('logoURL').that.contains('itau.jpg')
       expect(boleto.bank.options).to.have.property('codigo', '341')
     })
     
